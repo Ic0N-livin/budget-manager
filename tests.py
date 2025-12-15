@@ -13,13 +13,15 @@ class TestBudgetApp(unittest.TestCase):
 
     def test_manager_integration(self):
         # Test integracyjny: Menedżer + Koszty
-        manager = BudgetManager(100)
+        SALDO_STARTOWE = 100
+        manager = BudgetManager(SALDO_STARTOWE)
         manager.add_expense("Jedzenie", 30)
         self.assertEqual(manager.balance, 70)
         self.assertEqual(len(manager.expenses), 1)
 
     def test_insufficient_funds(self):
-        manager = BudgetManager(50)
+        SALDO_STARTOWE = 50
+        manager = BudgetManager(SALDO_STARTOWE)
         with self.assertRaises(ValueError):
             manager.add_expense("Zegarek", 100)
 
