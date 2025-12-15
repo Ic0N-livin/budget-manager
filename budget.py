@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 from datetime import datetime
 
 @dataclass
@@ -14,13 +15,13 @@ class Expense:
             raise ValueError("Tytuł nie może być pusty")
         
 class BudgetManager:
-    def __init__(self, balance=0):
+    def __init__(self, balance: float = 0.0):
         self.balance = balance
-        self.expenses = []
+        self.expenses: List[Expense] = []
 
-    def add_expense(self, title, amount):
+    def add_expense(self, title: str, amount: float) -> None:
         expense = Expense(title, amount)
         if amount > self.balance:
-            raise ValueError("Insufficient funds")
+            raise ValueError("Niewystarczające środki")
         self.expenses.append(expense)
         self.balance -= amount
