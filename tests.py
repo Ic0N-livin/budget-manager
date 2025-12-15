@@ -11,5 +11,17 @@ class TestBudgetApp(unittest.TestCase):
         with self.assertRaises(ValueError):
             Expense("Error", -5)
 
+    def test_manager_integration(self):
+        # Test integracyjny: Menedżer + Koszty
+        manager = BudgetManager(100)
+        manager.add_expense("Jedzenie", 30)
+        self.assertEqual(manager.balance, 70)
+        self.assertEqual(len(manager.expenses), 1)
+
+    def test_insufficient_funds(self):
+        manager = BudgetManager(50)
+        with self.assertRaises(ValueError):
+            manager.add_expense("Zegarek", 100)
+
 if __name__ == '__main__':
     unittest.main()
