@@ -39,3 +39,23 @@ class BudgetManager:
             raise ValueError("Niewystarczające środki")
         self.expenses.append(expense)
         self.balance -= amount
+
+@dataclass
+class Category:
+    """
+    Reprezentuje kategorię wydatków (np. Jedzenie, Transport).
+
+    Pozwala zdefiniować limit budżetowy dla danej grupy wydatków.
+    """
+    name: str
+    limit: float
+
+    def __post_init__(self):
+        if self.limit < 0:
+            raise ValueError("Limit kategorii nie moze byc ujemny")
+        if not self.name:
+            raise ValueError("Nazwa kategorii nie moze byc pusta")
+
+    def check_limit(self, current_spending: float) -> bool:
+        """Sprawdza, czy podana kwota mieści się w limicie."""
+        return current_spending <= self.limit
